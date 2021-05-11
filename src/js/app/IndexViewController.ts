@@ -52,7 +52,8 @@ export default class IndexViewController extends ViewController {
             '变换约束测试': this.goTnsTest,
             '路径约束和一键换肤测试': this.goPathCtrAndChangeSkinTest,
             'mesh动画贴图更换测试（翻页效果）': this.goPageDownTest,
-            ' mesh动画混合帧动画': this.goMeshMixAnimation
+            'mesh动画混合帧动画': this.goMeshMixAnimation,
+            '粒子效果': this.initParticeles
         };
 
         for (const key in testPool) {
@@ -180,6 +181,7 @@ export default class IndexViewController extends ViewController {
         });
     }
 
+    // 粒子效果
     private initParticeles () {
         if (Config.notLoadMoreAnim) return;
         let pWrap = PX.addCtn(this.mainWrap);
