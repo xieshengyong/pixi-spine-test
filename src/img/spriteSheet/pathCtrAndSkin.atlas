@@ -1,0 +1,27 @@
+
+pathCtrAndSkin.png
+size: 256,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+boy/boyarm-front
+  rotate: true
+  xy: 137, 214
+  size: 40, 117
+  orig: 45, 123
+  offset: 3, 5
+  index: -1
+boy/boyhand-front-fingers
+  rotate: true
+  xy: 0, 235
+  size: 19, 21
+  orig: 29, 31
+  offset: 5, 5
+  index: -1
+girl/arm-r
+  rotate: true
+  xy: 21, 216
+  size: 38, 116
+  orig: 45, 123
+  offset: 3, 4
+  index: -1
