@@ -6,6 +6,8 @@ import { delay, getImg, getRandom } from './tool/BaseTools';
 import { util, push } from './tool/TD';
 import EmitterSnow from '../../json/EmitterSnow.json';
 
+/// <reference path="node_modules/pixi-particles/ambient.d.ts" />
+
 export default class IndexViewController extends ViewController {
     isInit: boolean;
     isSecondLoadEnd: boolean;
@@ -79,9 +81,9 @@ export default class IndexViewController extends ViewController {
         this.mainWrap.addChild(animation3);
         animation3.state.setAnimation(0, 'start', true);
 
-        let changeSkin = PX.addText(this.mainWrap, '增加动画', 1000, 600, 30, 'red', 'center', 400);
+        let changeSkin = PX.addText(this.mainWrap, '点我增加动画', 1000, 600, 30, 'red', 'center', 400);
         changeSkin.interactive = true;
-        changeSkin.once('tap', () => {
+        changeSkin.once('pointertap', () => {
             changeSkin.destroy();
             this.goMeshPressureTest();
         });
@@ -115,13 +117,13 @@ export default class IndexViewController extends ViewController {
         let actions = ['down', 'hit'];
         animation.skeleton.setSkinByName(skins[0]);
         animation.state.setAnimation(0, actions[0], true);
-        let changeSkin = PX.addText(this.mainWrap, '一键换装', 650, 600, 30, 'red', 'center', 400);
+        let changeSkin = PX.addText(this.mainWrap, '点我一键换装', 650, 600, 30, 'red', 'center', 400);
         changeSkin.interactive = true;
         changeSkin.on('tap', () => {
             skins.unshift(skins.pop());
             animation.skeleton.setSkinByName(skins[0]);
         });
-        let changeAction = PX.addText(this.mainWrap, '切换动作', 850, 600, 30, 'red', 'center', 400);
+        let changeAction = PX.addText(this.mainWrap, '点我切换动作', 850, 600, 30, 'red', 'center', 400);
         changeAction.interactive = true;
         changeAction.on('tap', () => {
             actions.unshift(actions.pop());
@@ -139,7 +141,7 @@ export default class IndexViewController extends ViewController {
         animation2.state.setAnimation(0, 'animation', !true);
 
         let skins = ['icon_lyf.png', 'skeleton-2.jpg'];
-        let changeSkin = PX.addText(this.mainWrap, '贴图更换', 800, 600, 30, 'red', 'center', 400);
+        let changeSkin = PX.addText(this.mainWrap, '点我贴图更换', 800, 600, 30, 'red', 'center', 400);
         changeSkin.interactive = true;
         changeSkin.on('tap', async () => {
             let img = await getImg(require('../../img/autoLoad/' + skins[0]), true);
@@ -173,7 +175,7 @@ export default class IndexViewController extends ViewController {
             meshAnim.getChildAt(0).children[0].texture = lastTexture;
         };
 
-        let mix = PX.addText(this.mainWrap, '合并', 900, 600, 30, 'red', 'center', 400);
+        let mix = PX.addText(this.mainWrap, '点我合并mesh动画和帧动画', 900, 600, 30, 'red', 'center', 400);
         mix.interactive = true;
         mix.on('tap', async () => {
             ani.position.set(0, 660);
@@ -185,7 +187,8 @@ export default class IndexViewController extends ViewController {
     private initParticeles () {
         if (Config.notLoadMoreAnim) return;
         let pWrap = PX.addCtn(this.mainWrap);
-        let emitterSnow = new window.Particles.Emitter(pWrap, [PIXI.Sprite.from('particle.png').texture], EmitterSnow);
+        // @ts-ignore
+        let emitterSnow = new window.Particles.Emitter(pWrap, [PX.res['particle.png']], EmitterSnow);
         emitterSnow.emit = true;
 
         this.emitterCb = (dt: number) => {

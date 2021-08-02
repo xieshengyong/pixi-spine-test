@@ -75,7 +75,9 @@
                     <canvas class="abcter"></canvas>
                 </div>
 
-                <div class="m-select-wrap tcter"></div>
+                <div class="m-select-wrap tcter">
+                    <div class="title">测试列表：</div>
+                </div>
                 
                 <!-- 分享蒙层 -->
                 <div class="m-share absf">
@@ -100,9 +102,10 @@
 
     </div>
 
-    <script src="//ossweb-img.qq.com/images/js/zepto/zepto.modules.min.js"></script>
-    <script src="//game.gtimg.cn/images/js/mmdVideoPlayer/mmd.videoplayer.min.1.0.1.js" charset="utf-8"></script>
-    <script src="https://ossweb-img.qq.com/images/spiderMediaData/yxzj_new/mediaURLData_https.js"></script>
+    <script src="<%= require('./src/js/lib/zepto.min.1.0.js') %>"></script>
+    <!-- <script src="//ossweb-img.qq.com/images/js/zepto/zepto.modules.min.js"></script> -->
+    <!-- <script src="//game.gtimg.cn/images/js/mmdVideoPlayer/mmd.videoplayer.min.1.0.1.js" charset="utf-8"></script> -->
+    <!-- <script src="https://ossweb-img.qq.com/images/spiderMediaData/yxzj_new/mediaURLData_https.js"></script> -->
 
     <% if (process.env.NODE_ENV==='handover' && process.env.NODE_ENV2 != 'qn' ) { %>
         <script src="//ossweb-img.qq.com/images/js/TGMobileShare/TGMobileShare.min.js"></script>

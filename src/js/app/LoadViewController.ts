@@ -67,9 +67,6 @@ var initProject = async function () {
 };
 
 export default class LoadViewController extends ViewController {
-    // [propName: string]: any;
-    media: HTMLVideoElement;
-    videoPlayer: MMD.VideoPlayer;
     notLoadMoreAnim: Boolean;
 
     private init () {
@@ -121,40 +118,12 @@ export default class LoadViewController extends ViewController {
                 Config.loaderRes = res;
 
                 this.initEvent();
-                this.initVideo();
 
                 Config.loadMusic();
-
-                // // DEBUG: 跳过视频
-                // if (util.getQuery('_debug') === '1') {
-                //     $('.m-loading').fadeOut();
-                //     this.showIndex();
-                //     // this.hideVideo();
-                //     // await delay(2);
-                //     // await this.loadSecond();
-                // } else {
-                //     this.loadEnding();
-                // }
 
                 $('.m-loading').fadeOut();
                 this.showIndex();
                 this.hideVideo();
-
-                // let texture = new PIXI.BaseTexture('icon_drj.png');
-                // let sprite1 = new PIXI.Sprite(PIXI.utils.TextureCache['icon_lyf.png']);
-                // sprite1.position.set(0, 0);
-                // PX.stage.addChild(sprite1);
-                // console.log(sprite1);
-                // animation2.getChildAt(0).children[0].texture = PX.addSprite(this.mainWrap, 'icon_drj.png', 200, 100).texture;
-                // animation2.skeleton.setSkinByName('boy');
-
-                // animation3.skeleton.setSkinByName('boy');
-                // await delay(1);
-                // animation2.state.setAnimation(0, 'idle', true);
-                // animation2.skeleton.setSkinByName('full-skins/girl');
-                // await delay(1);
-                // animation2.state.setAnimation(0, 'dance', true);
-                // animation2.skeleton.setSkinByName('boy');
 
                 push('page', 'loading', '加载完成，耗时：' + (Date.now() - beginLoadTime));
             })
@@ -175,10 +144,6 @@ export default class LoadViewController extends ViewController {
         $('.m-index').fadeIn();
     }
 
-    private loadEnding () {
-        this.loadSecond();
-    }
-
     private initEvent () {
         this.once('videoStart', async () => {
             console.log('video start');
@@ -191,73 +156,12 @@ export default class LoadViewController extends ViewController {
         });
 
         $('.m-loading').one('click', () => {
-            this.videoPlayer.play();
             $('.m-icon-loading').fadeIn(200);
             push('btn', 'startVideo', '开始播放视频');
         });
     }
 
-    private initVideo () {
-        this.media = document.querySelector('#video');
-        this.media.setAttribute('x5-video-player-fullscreen', 'false');
-        this.media.setAttribute('x5-video-player-type', 'h5-page');
-
-        /* 监听视频开始播放，解决部分情况下MMD.VideoPlayer的onStart失效问题 */
-        const timeListener = () => {
-            if (this.media.currentTime <= 0) return;
-            this.emit('videoStart');
-            this.media.removeEventListener('timeupdate', timeListener);
-        };
-        this.media.addEventListener('timeupdate', timeListener);
-
-        let mediaSrc;
-        if (process.env.NODE_ENV === 'handover' && process.env.NODE_ENV2 !== 'qn') {
-            mediaSrc = mediaURLData[7653];
-        } else {
-            mediaSrc = require('../../media/video.mp4');
-        }
-        this.media.src = mediaSrc;
-        this.videoPlayer = new MMD.VideoPlayer({
-            videoElement: this.media,
-            src: mediaSrc,
-            timesParam: [
-                {
-                    name: 'showSkip',
-                    time: 2
-                },
-                {
-                    name: 'end',
-                    time: 8
-                }
-            ],
-            loop: false,
-            muted: false,
-            poster: '',
-            tryMultipleVideoPlayAtTheSameTime: false,
-            onTimes: async (name) => {
-                console.log('name :>> ', name);
-                switch (name) {
-                    case 'showSkip':
-                        this.showIndex();
-                        break;
-                    case 'end':
-                        this.emit('videoEnd');
-                        break;
-                    default:
-                        break;
-                }
-            },
-            onStart: () => {
-                this.emit('videoStart');
-            },
-            onEnd: () => {
-                this.emit('videoEnd');
-            }
-        });
-    }
-
     private async hideVideo () {
-        this.media.pause();
         $('.m-stage-wrap').fadeIn(0);
         await delay(0.2);
         $('.m-index').fadeOut(400);
