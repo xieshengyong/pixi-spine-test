@@ -14,6 +14,7 @@
         "replace": "cd dist/a20210317wwf/ossweb-img/ && replace 'ossweb-img/' '' -r --include=main.*.css,main.css",
         "qn1": "cross-env NODE_ENV2=qn webpack --config webpack.config.handover.js",
         "qn": "cross-env NODE_ENV2=qn webpack --config webpack.config.handover.js",
+        "postqn": "npm run qshell && npm run sftp",
         "handover": "webpack --config webpack.config.handover.js && npm run zip",
         "handoverm": "webpack --config webpack.config.handover.js && npm run moveVendor && npm run zip",
         "moveVendor": "move-file dist/a20210317wwf/ossweb-img/vendor.js dist/vendor.js",
@@ -22,6 +23,8 @@
         "moveVendor2": "move-file dist/a20210104aa/ossweb-img/vendor.js dist/vendor.js",
         "replaceAA": "cd dist/a20210104aa/ && replace 'a20210317wwf' 'a20210104aa' -r --include=index.html",
         "zip2": "cd dist && bestzip a20210104aa.zip a20210104aa/*",
+        "qshell": "qshell user cu me && qshell qupload -c 30 .qshell.json",
+        "sftp": "node sftp.js",
         "sever": "cd dist && browser-sync start -s"
     },
     "keywords": [
@@ -91,7 +94,8 @@
         "webpack-merge": "^4.1.0",
         "webpack-spritesmith": "^0.4.1",
         "webpack-strip": "^0.1.0",
-        "zip-webpack-plugin": "^2.1.0"
+        "zip-webpack-plugin": "^2.1.0",
+        "ssh2-sftp-client": "^7.2.0"
     },
     "dependencies": {
         "@types/axios": "^0.14.0",

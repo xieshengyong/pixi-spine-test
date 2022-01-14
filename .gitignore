@@ -8,3 +8,5 @@ test/build/*
 aBuildHistory
 aHasChangedFiles
 TexturePacker
+upload.log
+sftp.js
